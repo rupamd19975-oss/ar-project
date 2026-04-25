@@ -1,38 +1,29 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
-  <body style="margin: 0; overflow: hidden;">
+</head>
+<body style="margin: 0; overflow: hidden;">
     <a-scene 
-      mindar-image="imageTargetSrc: ./targets.mind;" 
+      mindar-image="imageTargetSrc: ./targets.mind; autoStart: true; uiLoading: no;" 
       vr-mode-ui="enabled: false" 
-      device-orientation-permission-ui="enabled: false"
-      cursor="rayOrigin: mouse"
-      raycaster="objects: .clickable">
+      device-orientation-permission-ui="enabled: false">
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <a-entity mindar-image-target="targetIndex: 0">
-        <a-link class="clickable"
-                href="https://music.youtube.com/watch?v=YOUR_MUSIC_ID"
-                title="PLAY MUSIC"
-                image="#static-img"
-                visualAspectEnabled="false"
-                position="0 0 0.1"
-                scale="0.4 0.4 0.4">
-        </a-link>
-
-        <a-plane class="clickable"
-                 color="red"
-                 width="1" height="0.4"
-                 position="0 0 0"
-                 onclick="window.location.href='https://youtu.be/nDjloeIB3Pc?si=9x3z4MHTNsxSU9Df'">
-          <a-text value="OPEN MUSIC" align="center" color="white" width="4"></a-text>
-        </a-plane>
-      </a-entity>
+      <a-entity id="targetItem" mindar-image-target="targetIndex: 0"></a-entity>
     </a-scene>
-  </body>
+
+    <script>
+      const target = document.querySelector('#targetItem');
+      
+      // This is the trigger: when the image is detected...
+      target.addEventListener("targetFound", () => {
+          // ...immediately go to your music or website
+          window.location.replace("https://youtu.be/nDjloeIB3Pc?si=9x3z4MHTNsxSU9Df");
+      });
+    </script>
+</body>
 </html>
